@@ -5,6 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 
 
+const quotes = [
+  { text: "Quality is never an accident.", author: "John Ruskin" },
+  { text: "Testing leads to failure, and failure leads to understanding.", author: "Burt Rutan" },
+  { text: "Make it work, make it right, make it fast.", author: "Kent Beck" },
+  { text: "The only way to go fast is to go well.", author: "Robert C. Martin" },
+];
+
 // Reduced phrases for a cleaner, less noisy UX
 const steps = [
   "Initializing systems...",
@@ -44,7 +51,7 @@ export default function LoadingScreen() {
     return () => clearInterval(ticker);
   }, []);
 
-  const q = quotes[quoteIndex];
+  
 
   return (
     <AnimatePresence>
@@ -102,7 +109,7 @@ export default function LoadingScreen() {
                 <motion.div 
                   animate={{ x: ["-100%", "200%"] }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+                  className="absolute inset-0 w-1/2 bg-linear-to-r from-transparent via-white/10 to-transparent -skew-x-12"
                 />
                 <span className="font-serif font-black text-3xl text-amber-400 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)] z-10">
                   QA
