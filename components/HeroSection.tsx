@@ -78,7 +78,7 @@ export default function HeroSection() {
           className="flex gap-8 sm:gap-16 mt-4"
         >
           {[
-            { value: "120+", label: "Documents" },
+            { value: "10+", label: "Documents" },
             { value: "4", label: "Learning Phases" },
             { value: "50+", label: "Video Lectures" },
           ].map((stat) => (
