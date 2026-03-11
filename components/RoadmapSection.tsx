@@ -143,21 +143,11 @@ function HeavyGlassCard({ item, isCompleted, onToggle, onView }: any) {
           </button>
         </div>
 
-        {/* Dynamic Context: Description & Tags */}
+        {/* Dynamic Context: Description */}
         <div className="relative z-10 mb-8 pl-1">
-          <p className="text-sm text-slate-400 leading-relaxed mb-4 max-w-[90%]">
+          <p className="text-sm text-slate-400 leading-relaxed max-w-[90%]">
             {item.description}
           </p>
-          <div className="flex flex-wrap gap-2">
-            {item.tags.map((tag: string) => (
-              <span 
-                key={tag} 
-                className="px-2.5 py-1 text-[11px] font-medium text-slate-300 bg-black/40 border border-white/5 rounded-md"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* The "Document Pill" inside the glass */}
@@ -180,14 +170,117 @@ function HeavyGlassCard({ item, isCompleted, onToggle, onView }: any) {
                 </div>
               </div>
             </div>
-            
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 text-white group-hover:${item.bgColor} group-hover:text-black group-hover:border-transparent transition-all duration-300`}>
-              <ArrowRight className="w-4 h-4 -translate-x-0.5 group-hover:translate-x-0.5 transition-transform" />
-            </div>
+            <ArrowRight className={`w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 ${item.textColor}`} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// MAIN ROADMAP SECTION
+// ==========================================
+export default function RoadmapSection() {
+  const [completed, setCompleted] = useState<string[]>([]);
+  const [activePhase, setActivePhase] = useState<Phase | null>(null);
+
+  const toggleCompleted = (id: string) => {
+    setCompleted((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  return (
+    <section className="relative overflow-hidden bg-slate-950 py-24 px-4">
+      {/* Background glow */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-cyan-500/5 blur-[120px]" />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-slate-400 text-xs font-semibold tracking-widest uppercase mb-6">
+            <Sparkles className="w-3.5 h-3.5" />
+            Learning Path
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">
+            QA Engineering Roadmap
+          </h2>
+          <p className="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
+            A structured path from manual testing fundamentals to AI-powered quality engineering.
+          </p>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="mb-12 p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-white">Your Progress</span>
+            <span className="text-sm text-slate-400">{completed.length} / {phases.length} phases</span>
+          </div>
+          <div className="h-2 rounded-full bg-white/10">
+            <div
+              className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 transition-all duration-700"
+              style={{ width: `${(completed.length / phases.length) * 100}%` }}
+            />
           </div>
         </div>
 
+        {/* Phase Cards */}
+        <div className="relative space-y-8">
+          {phases.map((phase, index) => (
+            <motion.div
+              key={phase.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <HeavyGlassCard
+                item={phase}
+                isCompleted={completed.includes(phase.id)}
+                onToggle={() => toggleCompleted(phase.id)}
+                onView={() => setActivePhase(phase)}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* PDF Modal */}
+      <AnimatePresence>
+        {activePhase && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setActivePhase(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl rounded-2xl bg-slate-900 border border-white/10 overflow-hidden"
+            >
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
+                <span className={`font-semibold text-sm ${activePhase.textColor}`}>{activePhase.filename}</span>
+                <button
+                  onClick={() => setActivePhase(null)}
+                  className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="h-[70vh]">
+                <iframe src={activePhase.pdf} className="w-full h-full" title={activePhase.filename} />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

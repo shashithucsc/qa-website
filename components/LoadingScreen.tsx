@@ -62,13 +62,11 @@ export default function LoadingScreen() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-between overflow-hidden bg-[#06060f]"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden bg-[#06060f]"
         >
           {/* ── 1. BACKGROUND ───────────────────── */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.02]" />
-            
-            {/* Deep, subtle Aurora Orbs */}
             <motion.div
               animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -79,39 +77,58 @@ export default function LoadingScreen() {
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               className="absolute -bottom-[20%] -right-[10%] w-[60vw] h-[60vw] bg-cyan-600/10 rounded-full blur-[150px] mix-blend-screen"
             />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] bg-amber-500/5 rounded-full blur-[100px]" />
+            <motion.div
+              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35vw] h-[35vw] bg-amber-500/5 rounded-full blur-[90px]"
+            />
           </div>
 
-          <div className="h-24" />
+          {/* ── 2. GLASS CARD ──────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-10 flex flex-col items-center w-full max-w-sm mx-4 px-8 py-10 rounded-3xl bg-white/[0.03] border border-white/[0.07] shadow-[0_0_80px_rgba(0,0,0,0.5)] backdrop-blur-sm"
+          >
+            {/* Top accent line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
 
-          {/* ── 2. CENTERPIECE: THE CORE ──────────────────── */}
-          <div className="relative z-10 flex flex-col items-center w-full max-w-md px-6">
-            
             {/* Glass Logo Orb */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              initial={{ scale: 0.8, opacity: 0, y: 10 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               transition={{ duration: 1, type: "spring", bounce: 0.5 }}
-              className="relative mb-12 flex items-center justify-center"
+              className="relative mb-8 flex items-center justify-center"
             >
-              <motion.div 
-                animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-                className="absolute inset-0 rounded-3xl bg-amber-500/20 blur-md"
+              {/* Slow rotating dashed ring */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute w-32 h-32 rounded-[2rem] border border-dashed border-amber-400/15"
+              />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+                className="absolute w-36 h-36 rounded-[2.5rem] border border-dotted border-white/5"
               />
               <motion.div 
-                animate={{ scale: [1, 1.2], opacity: [0.8, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
-                className="absolute inset-0 rounded-3xl border border-amber-400/30"
+                animate={{ scale: [1, 1.5], opacity: [0.4, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+                className="absolute w-24 h-24 rounded-3xl bg-amber-500/15 blur-md"
               />
-
-              <div className="relative w-24 h-24 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(245,158,11,0.2)] flex items-center justify-center overflow-hidden">
+              <motion.div 
+                animate={{ scale: [1, 1.25], opacity: [0.7, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 0.6 }}
+                className="absolute w-24 h-24 rounded-3xl border border-amber-400/25"
+              />
+              <div className="relative w-24 h-24 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(245,158,11,0.25),inset_0_1px_1px_rgba(255,255,255,0.08)] flex items-center justify-center overflow-hidden">
                 <motion.div 
                   animate={{ x: ["-100%", "200%"] }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 w-1/2 bg-linear-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+                  className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
                 />
-                <span className="font-serif font-black text-3xl text-amber-400 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)] z-10">
+                <span className="font-serif font-black text-3xl text-amber-400 drop-shadow-[0_0_12px_rgba(245,158,11,0.6)] z-10">
                   QA
                 </span>
               </div>
@@ -119,53 +136,73 @@ export default function LoadingScreen() {
 
             {/* Brand Typography */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-center mb-10 w-full"
+              className="text-center mb-7 w-full"
             >
-              <h1 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
+              <h1 className="font-serif text-3xl font-bold text-white mb-1 tracking-tight">
                 QA For Devindi
               </h1>
-              <div className="flex items-center justify-between w-full px-1">
-                <motion.span 
+              <p className="text-slate-600 text-[10px] tracking-[0.2em] uppercase font-medium">
+                Engineering Archive
+              </p>
+            </motion.div>
+
+            {/* Progress */}
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45 }}
+              className="w-full"
+            >
+              <div className="flex items-center justify-between mb-2 px-0.5">
+                <motion.span
                   key={stepIndex}
                   initial={{ opacity: 0, filter: "blur(4px)" }}
                   animate={{ opacity: 1, filter: "blur(0px)" }}
-                  className="text-slate-400 text-xs font-mono tracking-widest uppercase"
+                  className="text-slate-500 text-[10px] font-mono tracking-widest uppercase"
                 >
                   {steps[stepIndex]}
                 </motion.span>
-                <span className="text-cyan-400 font-mono text-xs font-bold tabular-nums">
+                <span className="text-cyan-400 font-mono text-[10px] font-bold tabular-nums">
                   {Math.round(progress)}%
                 </span>
               </div>
+              <div className="w-full h-[3px] bg-white/5 rounded-full overflow-hidden relative">
+                <div
+                  className="absolute top-0 left-0 bottom-0 rounded-full bg-gradient-to-r from-cyan-500 to-cyan-300"
+                  style={{ width: `${progress}%`, boxShadow: "0 0 12px rgba(34,211,238,0.7)" }}
+                />
+                <div
+                  className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full"
+                  style={{
+                    left: `calc(${progress}% - 3px)`,
+                    opacity: progress > 0 && progress < 100 ? 1 : 0,
+                    boxShadow: "0 0 8px 2px rgba(34,211,238,1)",
+                  }}
+                />
+              </div>
             </motion.div>
 
-            {/* Solid Color Laser Progress Track */}
-            <motion.div 
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="w-full h-1 bg-white/5 rounded-full overflow-hidden relative shadow-inner"
+            {/* Quote */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.4, delay: 0.9 }}
+              className="mt-7 pt-6 border-t border-white/[0.06] w-full text-center"
             >
-              {/* Solid Cyan Fill */}
-              <motion.div
-                className="absolute top-0 left-0 bottom-0 bg-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.8)]"
-                style={{ width: `${progress}%` }}
-              />
-              {/* Glowing Leading Edge */}
-              <div
-                className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_10px_2px_rgba(34,211,238,1)]"
-                style={{ 
-                  left: `calc(${progress}% - 4px)`,
-                  opacity: progress > 0 && progress < 100 ? 1 : 0 
-                }}
-              />
+              <p className="text-slate-500 text-[11px] italic leading-relaxed">
+                &ldquo;{quotes[quoteIndex].text}&rdquo;
+              </p>
+              <p className="text-slate-600 text-[10px] mt-1.5 tracking-wider uppercase">
+                — {quotes[quoteIndex].author}
+              </p>
             </motion.div>
-          </div>
 
-      
+            {/* Bottom accent line */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-cyan-400/25 to-transparent" />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
