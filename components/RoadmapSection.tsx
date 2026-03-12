@@ -143,12 +143,7 @@ function HeavyGlassCard({ item, isCompleted, onToggle, onView }: any) {
           </button>
         </div>
 
-        {/* Dynamic Context: Description */}
-        <div className="relative z-10 mb-8 pl-1">
-          <p className="text-sm text-slate-400 leading-relaxed max-w-[90%]">
-            {item.description}
-          </p>
-        </div>
+       
 
         {/* The "Document Pill" inside the glass */}
         <div 
