@@ -33,7 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${playfairDisplay.variable} antialiased`}
       >
         <LoadingScreen />
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
       </body>
     </html>
